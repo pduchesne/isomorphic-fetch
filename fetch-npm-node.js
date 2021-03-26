@@ -1,9 +1,13 @@
 "use strict";
 
-var realFetch = require('node-fetch');
-module.exports = function(url, options) {
+var nodeFetch = require("node-fetch");
+// deal with node-fetch being exposed as main and module
+// check https://github.com/lquixada/cross-fetch/issues/15
+var realFetch = nodeFetch.default || nodeFetch;
+
+module.exports = function (url, options) {
 	if (/^\/\//.test(url)) {
-		url = 'https:' + url;
+		url = "https:" + url;
 	}
 	return realFetch.call(this, url, options);
 };
